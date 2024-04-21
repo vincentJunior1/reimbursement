@@ -5,6 +5,7 @@ import (
 	"os/signal"
 	"reimbursement/controllers"
 	"reimbursement/helper"
+	"reimbursement/middleware"
 	"reimbursement/repository"
 	"reimbursement/routers"
 	"reimbursement/usecase"
@@ -17,10 +18,11 @@ import (
 func main() {
 	godotenv.Load(".env")
 	logging := helper.InitializeNewLogs()
+	mid := middleware.InitMiddleware(logging)
 	db := repository.InitializeMysqlDatabase(logging)
 	uc := usecase.InitializeV1Usecase(db, logging)
 	controller := controllers.InitializeV1Controller(uc, logging)
-	route := routers.InitializeRouter(controller, logging)
+	route := routers.InitializeRouter(controller, mid, logging)
 
 	serverErr := make(chan error, 1)
 	go func() {

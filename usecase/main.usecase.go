@@ -18,6 +18,7 @@ type (
 
 	Usecase interface {
 		HealthCheck(ctx context.Context) hModels.Response
+		Login(ctx context.Context, payload models.ReqLogin) hModels.Response
 		CreateUser(ctx context.Context, payload models.ReqSaveUser) hModels.Response
 		CreateCompany(ctx context.Context, payload models.ReqCompany) hModels.Response
 	}

@@ -72,6 +72,10 @@ func MetaHelper(code int) hModels.MetaData {
 		resp.Code = http.StatusUnprocessableEntity
 		resp.Message = "Failed Create Data"
 		resp.Title = "Failed"
+	case http.StatusUnauthorized:
+		resp.Code = http.StatusUnauthorized
+		resp.Message = "Failed Login"
+		resp.Title = "Unauthorized"
 	}
 
 	return resp

@@ -5,6 +5,7 @@ import (
 
 	"reimbursement/controllers"
 	"reimbursement/helper"
+	"reimbursement/middleware"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -23,12 +24,13 @@ type (
 		Gin        *gin.Engine
 		Logs       *logs.Logger
 		Path       map[string]string
+		Middleware middleware.Middleware
 		Controller controllers.Controller
 	}
 )
 
 // InitializeRouter return sturct that will implement the abs. class
-func InitializeRouter(ctrl controllers.Controller, l *logs.Logger) RouterInterface {
+func InitializeRouter(ctrl controllers.Controller, mid middleware.Middleware, l *logs.Logger) RouterInterface {
 	gin.SetMode(helper.GetEnv("ROUTER_SETMODE"))
 	return &Router{
 		address: helper.GetEnv("ROUTER_SERVER_ADDRESS"),
@@ -39,6 +41,7 @@ func InitializeRouter(ctrl controllers.Controller, l *logs.Logger) RouterInterfa
 		},
 		Gin:        gin.New(),
 		Logs:       l,
+		Middleware: mid,
 		Controller: ctrl,
 	}
 }
@@ -83,6 +86,7 @@ func (r *Router) routerControllers() {
 		user := v1.Group("/user")
 		{
 			user.POST("/", r.Controller.CreateUser)
+			user.POST("/login", r.Controller.Login)
 		}
 
 	}

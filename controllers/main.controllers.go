@@ -18,6 +18,7 @@ type (
 		Logs    *logs.Logger
 	}
 	Controller interface {
+		Login(ctx *gin.Context)
 		CreateUser(ctx *gin.Context)
 		HealthCheck(ctx *gin.Context)
 		CreateCompany(ctx *gin.Context)

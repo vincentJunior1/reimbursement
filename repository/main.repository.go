@@ -23,6 +23,7 @@ type (
 
 	// interface from MysqlDatabase
 	MysqlDatabase interface {
+		FindUserByEmail(ctx context.Context, email string) (entity.User, error)
 		FindCompanyById(ctx context.Context, id int) (entity.Company, error)
 		CreateUser(ctx context.Context, data entity.User) error
 		CreateCompany(ctx context.Context, data *entity.Company) error
