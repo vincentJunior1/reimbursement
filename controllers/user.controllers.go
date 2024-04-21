@@ -14,6 +14,8 @@ import (
 )
 
 func (c *controller) CreateUser(ctx *gin.Context) {
+	helper.PrintHeader()
+
 	var res hModels.Response
 	var payload models.ReqSaveUser
 
@@ -43,6 +45,8 @@ func (c *controller) CreateUser(ctx *gin.Context) {
 }
 
 func (c *controller) Login(ctx *gin.Context) {
+	helper.PrintHeader()
+
 	var res hModels.Response
 	var payload models.ReqLogin
 

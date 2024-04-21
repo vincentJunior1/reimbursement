@@ -22,15 +22,13 @@ type ContentErrorCode struct {
 
 // Response ..
 type Response struct {
-	Data  interface{} `json:"data,omitempty"`
-	Meta  MetaData    `json:"meta"`
-	Count int64       `json:"count,omitempty"`
-	Page  *Page       `json:"page,omitempty"`
+	Data interface{} `json:"data,omitempty"`
+	Meta MetaData    `json:"meta"`
+	Page *Page       `json:"page,omitempty"`
 }
 
 // Page ..
 type Page struct {
-	CurrentPage  int `json:"curPage,omitempty"`
-	PreviousPage int `json:"prevPage,omitempty"`
-	NextPage     int `json:"nextPage,omitempty"`
+	TotalData int64 `json:"total_data"`
+	Page      int   `json:"page"`
 }

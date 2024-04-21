@@ -22,6 +22,12 @@ type (
 		CreateUser(ctx *gin.Context)
 		HealthCheck(ctx *gin.Context)
 		CreateCompany(ctx *gin.Context)
+		GetAllEmployeeClaim(ctx *gin.Context)
+		CreateEmployeeClaim(ctx *gin.Context)
+		UpdateEmployeeClaim(ctx *gin.Context)
+		DeleteEmployeeClaim(ctx *gin.Context)
+		ApproveOrRejectClaim(ctx *gin.Context)
+		GetAllEmployeeClaimAdmin(ctx *gin.Context)
 	}
 )
 

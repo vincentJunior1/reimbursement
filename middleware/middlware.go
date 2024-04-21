@@ -18,7 +18,7 @@ type (
 	}
 
 	Middleware interface {
-		JwtAuthorization() gin.HandlerFunc
+		JwtAuthorization(level string) gin.HandlerFunc
 	}
 )
 
@@ -28,7 +28,7 @@ func InitMiddleware(log *logrus.Logger) Middleware {
 	}
 }
 
-func (m *middleware) JwtAuthorization() gin.HandlerFunc {
+func (m *middleware) JwtAuthorization(level string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.Request.Header.Get("Authorization")
 		newData := &models.ClaimsJwtRes{}
@@ -41,14 +41,28 @@ func (m *middleware) JwtAuthorization() gin.HandlerFunc {
 		})
 
 		if err != nil {
-			logrus.Error("Error token :", err)
+			m.Log.Error("Error token :", err)
 			res := hModels.Response{
 				Meta: helper.MetaHelper(constants.Unauthorized),
 			}
 			c.JSON(res.Meta.Code, res)
+			c.Abort()
 		}
-		logrus.Println(token)
+
+		if level == "Admin" {
+			if newData.Type != 1 {
+				m.Log.Error("Error forbidden :", err)
+				res := hModels.Response{
+					Meta: helper.MetaHelper(constants.Forbidden),
+				}
+				c.JSON(res.Meta.Code, res)
+				c.Abort()
+			}
+		}
+
 		c.Set("user", newData)
+		c.Set("token", token)
+		m.Log.Println("Ini valuenya ", c.Value("user"))
 		c.Next()
 	}
 }

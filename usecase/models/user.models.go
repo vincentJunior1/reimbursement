@@ -25,5 +25,5 @@ type ClaimsJwtRes struct {
 	Id        int    `json:"id"`
 	CompanyId int    `json:"company_id"`
 	Name      string `json:"name"`
-	Type      string `json:"type"`
+	Type      int    `json:"type"`
 }

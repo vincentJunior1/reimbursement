@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 	"reimbursement/helper"
+	hModels "reimbursement/helper/models"
 	"reimbursement/repository/entity"
+	"reimbursement/usecase/models"
 
 	// uModels "reimbursement/usecase/models"
 
@@ -23,10 +25,16 @@ type (
 
 	// interface from MysqlDatabase
 	MysqlDatabase interface {
-		FindUserByEmail(ctx context.Context, email string) (entity.User, error)
-		FindCompanyById(ctx context.Context, id int) (entity.Company, error)
 		CreateUser(ctx context.Context, data entity.User) error
 		CreateCompany(ctx context.Context, data *entity.Company) error
+		FindCompanyById(ctx context.Context, id int) (entity.Company, error)
+		FindUserByEmail(ctx context.Context, email string) (entity.User, error)
+		SaveEmployeeClaim(ctx context.Context, data *entity.EmployeeClaim) error
+		DeleteEmployeeClaim(ctx context.Context, data entity.EmployeeClaim) error
+		FindEmployeeClaim(ctx context.Context, id int) (entity.EmployeeClaim, error)
+		UpdatedEmployeeClaim(ctx context.Context, id int, data *entity.EmployeeClaim) error
+		GetAllEmployeeClaim(ctx context.Context, employeeId int, params models.ParamsGetEmployeeClaim) ([]entity.EmployeeClaim, hModels.Page, error)
+		GetAllEmployeeClaimAdmin(ctx context.Context, companyId int, params models.ParamsGetEmployeeClaim) ([]entity.EmployeeClaim, hModels.Page, error)
 	}
 )
 

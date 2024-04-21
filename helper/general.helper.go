@@ -58,7 +58,7 @@ func MetaHelper(code int) hModels.MetaData {
 	switch code {
 	case http.StatusCreated:
 		resp.Code = http.StatusCreated
-		resp.Message = "Success Create Data"
+		resp.Message = "Success Save Data"
 		resp.Title = "Success"
 	case http.StatusOK:
 		resp.Code = http.StatusOK
@@ -76,6 +76,18 @@ func MetaHelper(code int) hModels.MetaData {
 		resp.Code = http.StatusUnauthorized
 		resp.Message = "Failed Login"
 		resp.Title = "Unauthorized"
+	case 500:
+		resp.Code = 500
+		resp.Message = "Something Wrong"
+		resp.Title = "Failed"
+	case http.StatusAccepted:
+		resp.Code = http.StatusAccepted
+		resp.Message = "Success"
+		resp.Title = "Success"
+	case http.StatusForbidden:
+		resp.Code = http.StatusForbidden
+		resp.Message = "You're not allowed"
+		resp.Title = "Failed"
 	}
 
 	return resp

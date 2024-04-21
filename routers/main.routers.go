@@ -88,6 +88,15 @@ func (r *Router) routerControllers() {
 			user.POST("/", r.Controller.CreateUser)
 			user.POST("/login", r.Controller.Login)
 		}
+		employeeClaim := v1.Group("/claim")
+		{
+			employeeClaim.GET("/", r.Middleware.JwtAuthorization(""), r.Controller.GetAllEmployeeClaim)
+			employeeClaim.POST("/", r.Middleware.JwtAuthorization(""), r.Controller.CreateEmployeeClaim)
+			employeeClaim.PUT("/:id", r.Middleware.JwtAuthorization(""), r.Controller.UpdateEmployeeClaim)
+			employeeClaim.DELETE("/:id", r.Middleware.JwtAuthorization(""), r.Controller.DeleteEmployeeClaim)
+			employeeClaim.GET("/admin", r.Middleware.JwtAuthorization("Admin"), r.Controller.GetAllEmployeeClaimAdmin)
+			employeeClaim.POST("/approve-reject/:id", r.Middleware.JwtAuthorization("Admin"), r.Controller.ApproveOrRejectClaim)
+		}
 
 	}
 
