@@ -10,6 +10,8 @@ import (
 	"reimbursement/routers"
 	"reimbursement/usecase"
 	"syscall"
+	"google.golang.org/grpc"
+	pb "reimbursement/proto-go"
 
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
@@ -28,6 +30,10 @@ func main() {
 	go func() {
 		serverErr <- route.StartServer()
 	}()
+
+	grpc := grpc.NewServer()
+
+	pb.
 
 	var signalChan = make(chan os.Signal, 1)
 	signal.Notify(signalChan, os.Interrupt, syscall.SIGTERM)
