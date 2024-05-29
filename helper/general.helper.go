@@ -53,6 +53,10 @@ func PrintHeader() {
 	fmt.Println()
 }
 
+func ToIntPointer(x int) *int {
+	return &x
+}
+
 func MetaHelper(code int) hModels.MetaData {
 	resp := hModels.MetaData{}
 	switch code {

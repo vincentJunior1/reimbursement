@@ -6,7 +6,7 @@ type EmployeeClaim struct {
 	Id              int       `gorm:"column:id" json:"id"`
 	EmployeeId      int       `gorm:"column:employee_id" json:"employee_id"`
 	CompanyId       int       `gorm:"column:company_id" json:"company_id"`
-	ClaimCateogry   int       `gorm:"column:claim_category" json:"claim_category"`
+	ClaimCateogry   *int      `gorm:"column:claim_category" json:"claim_category"`
 	ClaimDate       time.Time `gorm:"column:claim_date" json:"claim_date"`
 	Currency        string    `gorm:"column:currency" json:"currency"`
 	ClaimAmount     float64   `gorm:"column:claim_amount" json:"claim_amount"`

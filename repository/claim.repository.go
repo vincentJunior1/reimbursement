@@ -7,13 +7,13 @@ import (
 	"reimbursement/usecase/models"
 )
 
-func (d *mysqlDatabase) SaveEmployeeClaim(ctx context.Context, data *entity.EmployeeClaim) error {
-	query := d.Db.Model(data)
+func (d *mysqlDatabase) SaveEmployeeClaim(ctx context.Context, data entity.EmployeeClaim) (entity.EmployeeClaim, error) {
+	query := d.Db.Model(&data)
 	query = query.Save(data)
 
-	query.First(data)
+	query.First(&data)
 
-	return query.Error
+	return data, query.Error
 }
 
 func (d *mysqlDatabase) GetAllEmployeeClaim(ctx context.Context, employeeId int, params models.ParamsGetEmployeeClaim) ([]entity.EmployeeClaim, hModels.Page, error) {

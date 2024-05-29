@@ -28,21 +28,24 @@ func (u *usecase) CreateEmployeeClaim(ctx *gin.Context, payload models.ReqCreate
 		return res
 	}
 
-	fileName := supportDocument.Filename
-	filePath := helper.GetEnv("FILEPATH") + helper.GetEnv("FILEPATH_CLAIM")
+	fileName := ""
+	if supportDocument != nil {
+		fileName = supportDocument.Filename
+		filePath := helper.GetEnv("FILEPATH") + helper.GetEnv("FILEPATH_CLAIM")
 
-	if err := ctx.SaveUploadedFile(supportDocument, filePath); err != nil {
-		res.Meta = helper.MetaHelper(constants.FailedSaveData)
-		return res
+		if err := ctx.SaveUploadedFile(supportDocument, filePath); err != nil {
+			res.Meta = helper.MetaHelper(constants.FailedSaveData)
+			return res
+		}
+
 	}
 
-	claimDate, err := time.Parse("2006-01-02 15:04:05", payload.ClaimDate)
-	u.Logs.Println(err)
-	data := &entity.EmployeeClaim{
+	claimDate, _ := time.Parse("2006-01-02 15:04:05", payload.ClaimDate)
+	data := entity.EmployeeClaim{
 		EmployeeId:      userInfo.Id,
 		CompanyId:       userInfo.CompanyId,
 		ClaimCateogry:   payload.ClaimCateogry,
-		ClaimDate:       claimDate.Local(),
+		ClaimDate:       claimDate,
 		Currency:        payload.Currency,
 		ClaimAmount:     payload.ClaimAmount,
 		Status:          1,
@@ -50,13 +53,15 @@ func (u *usecase) CreateEmployeeClaim(ctx *gin.Context, payload models.ReqCreate
 		SupportDocument: fileName,
 	}
 
-	if err := u.DB.SaveEmployeeClaim(ctx, data); err != nil {
+	newData, err := u.DB.SaveEmployeeClaim(ctx, data)
+
+	if err != nil {
 		res.Meta = helper.MetaHelper(constants.FailedSaveData)
 		return res
 	}
 
 	res.Meta = helper.MetaHelper(constants.SuccessCreateData)
-	res.Data = data
+	res.Data = newData
 	return res
 }
 

@@ -29,7 +29,7 @@ type (
 		CreateCompany(ctx context.Context, data *entity.Company) error
 		FindCompanyById(ctx context.Context, id int) (entity.Company, error)
 		FindUserByEmail(ctx context.Context, email string) (entity.User, error)
-		SaveEmployeeClaim(ctx context.Context, data *entity.EmployeeClaim) error
+		SaveEmployeeClaim(ctx context.Context, data entity.EmployeeClaim) (entity.EmployeeClaim, error)
 		DeleteEmployeeClaim(ctx context.Context, data entity.EmployeeClaim) error
 		FindEmployeeClaim(ctx context.Context, id int) (entity.EmployeeClaim, error)
 		UpdatedEmployeeClaim(ctx context.Context, id int, data *entity.EmployeeClaim) error
