@@ -72,7 +72,6 @@ func (u *usecase) GetAllEmployeeClaim(ctx context.Context, params models.ParamsG
 
 	if ctx.Value("user") != nil {
 		userInfo = ctx.Value("user").(*models.ClaimsJwtRes)
-		u.Logs.Println(ctx.Value)
 	}
 
 	if userInfo.Id == 0 {
