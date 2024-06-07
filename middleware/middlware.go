@@ -62,7 +62,6 @@ func (m *middleware) JwtAuthorization(level string) gin.HandlerFunc {
 
 		c.Set("user", newData)
 		c.Set("token", token)
-		m.Log.Println("Ini valuenya ", c.Value("user"))
 		c.Next()
 	}
 }

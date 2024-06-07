@@ -14,6 +14,7 @@ import (
 )
 
 func (u *usecase) CreateEmployeeClaim(ctx *gin.Context, payload models.ReqCreateEmployeeClaim, supportDocument *multipart.FileHeader) hModels.Response {
+	helper.PrintHeader()
 	res := hModels.Response{}
 
 	userInfo := &models.ClaimsJwtRes{}

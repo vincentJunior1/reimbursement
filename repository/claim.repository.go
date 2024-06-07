@@ -2,14 +2,16 @@ package repository
 
 import (
 	"context"
+	"reimbursement/helper"
 	hModels "reimbursement/helper/models"
 	"reimbursement/repository/entity"
 	"reimbursement/usecase/models"
 )
 
 func (d *mysqlDatabase) SaveEmployeeClaim(ctx context.Context, data entity.EmployeeClaim) (entity.EmployeeClaim, error) {
-	query := d.Db.Model(&data)
-	query = query.Save(data)
+	helper.PrintHeader()
+	query := d.Db.Model(data)
+	query = query.Save(&data)
 
 	query.First(&data)
 
